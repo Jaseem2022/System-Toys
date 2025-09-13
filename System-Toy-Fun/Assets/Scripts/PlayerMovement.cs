@@ -12,7 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float recordTimer = 0.0f;
     [SerializeField] float recordInterval = 0.2f;
     [SerializeField] float blinkBoost = 2.5f;
-    
+    [SerializeField] float blinkCoolDown = 2f;
+    [SerializeField] float rewindCoolDown = 5f;
 
     private Rigidbody rb;
     private Vector2 moveInput;
@@ -21,7 +22,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isBlinkPressed;
     private float dashTime = 0.2f;
     private float dashTimer = 0f;
-
+    private bool canUseBlink = true;
+    private bool canUseRewind = true;
+    float blinkTimer = 0f;
+    float rewindTimer = 0f;
 
     private Queue<Vector3> positionHistory = new Queue<Vector3>();
     private Vector3 initialPosition;
@@ -41,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     void OnRewind(InputValue value)
     {
         float speed = .95f;
-        if (value.isPressed)
+        if (value.isPressed && canUseRewind)
         {
             if (positionHistory.Count() > 0)
             {
@@ -49,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
                 rb.MovePosition(Vector3.Lerp(transform.position, past, speed));
 
             }
+            rewindTimer = rewindCoolDown;
+            canUseRewind = false;
         }
     }
 
@@ -61,22 +67,24 @@ public class PlayerMovement : MonoBehaviour
     {
         move = new Vector3(moveInput.x, 0, moveInput.y);
 
-        if (isBlinkPressed)
+        if (isBlinkPressed && canUseBlink)
         {
             dashTimer = dashTime;
-            isBlinkPressed = false;
+            blinkTimer = blinkCoolDown;
+            canUseBlink = false;
         }
 
         if (dashTimer > 0)
         {
             rb.MovePosition(rb.position + move * moveAcceleration * blinkBoost * Time.deltaTime);
-            //isBlinkPressed = false;
             dashTimer -= Time.deltaTime;
         }
         else
         {
             rb.MovePosition(rb.position + move * moveAcceleration * Time.deltaTime);
         }
+
+        isBlinkPressed = false; //to prevent ghost input
     }
 
     void Jump()
@@ -125,9 +133,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void TrackCoolDown()
+    {
+        if (blinkTimer > 0) { blinkTimer -= Time.deltaTime; }
+
+        if (rewindTimer > 0) { rewindTimer -= Time.deltaTime; }
+
+        if (blinkTimer <= 0)
+        {
+            blinkTimer = Mathf.Max(0, blinkTimer);  
+            canUseBlink = true;
+        }
+
+        if (rewindTimer <= 0)
+        {
+            rewindTimer = Mathf.Max(0, rewindTimer);
+            canUseRewind = true;
+        }
+    }
+    
     void Update()
     {
         Movement();
+        TrackCoolDown();
+
     }
 
 

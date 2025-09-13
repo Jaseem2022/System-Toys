@@ -462,7 +462,9 @@ MonoBehaviour:
   recordLimit: 5
   recordTimer: 0
   recordInterval: 0.2
-  blinkBoost: 2.5
+  blinkBoost: 5
+  blinkCoolDown: 2
+  rewindCoolDown: 5
 --- !u!114 &784556059
 MonoBehaviour:
   m_ObjectHideFlags: 0
