@@ -133,6 +133,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Gravity",
+            "id": "5f69fe69-659d-4cea-8ea9-b2e55ab0d0af",
+            "actions": [
+                {
+                    "name": "GravityFlip",
+                    "type": "Button",
+                    "id": "1225cc81-fad8-479c-9cc6-8ed67999d35f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "19bca29b-caf3-4f9f-b22b-73ea783a2eee",
+                    "path": "<Keyboard>/g",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GravityFlip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
