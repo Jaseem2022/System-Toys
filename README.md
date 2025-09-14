@@ -1,5 +1,3 @@
----
-
 # System Toys 🎮
 
 **System Toys** is a sandbox Unity project where I experiment with fun gameplay mechanics inspired by popular games (Tracer’s rewind/blink, Junkrat’s trap, gravity flips, and more). The goal is to explore mechanics in isolation and build them into a toybox of systems.
