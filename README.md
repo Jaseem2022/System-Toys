@@ -1,5 +1,3 @@
-Good point 👍 That separation makes the README clearer. Let me reorganize it so **abilities** are player-centric and **environment** covers world interactions:
-
 ---
 
 # System Toys 🎮
