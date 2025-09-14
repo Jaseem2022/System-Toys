@@ -22,9 +22,13 @@ public class Trap : MonoBehaviour
             isPlayerTrapped = true;
 
             Vector3 trapCenter = transform.position;
-            other.transform.position = new Vector3(trapCenter.x,
+            
+            Vector3 oldPlayerPosition = other.transform.position;
+            Vector3 newPlayerPosition = new Vector3(trapCenter.x,
                                                    trapCenter.y + (trapHeight/2f) ,
                                                    trapCenter.z);
+            other.transform.position = Vector3.Lerp(oldPlayerPosition,newPlayerPosition,0.95f);
+
 
             if (rend != null)
             {
