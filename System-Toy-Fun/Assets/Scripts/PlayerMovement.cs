@@ -14,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float blinkBoost = 2.5f;
     [SerializeField] float blinkCoolDown = 2f;
     [SerializeField] float rewindCoolDown = 5f;
+    [SerializeField] GameObject playerClone;
+    [SerializeField] float cloneTimeCoolDown = 5f;
+    [SerializeField] float cloneTimeDestructionCoolDown = 2.5f;
+     
 
     private Rigidbody rb;
     private Vector2 moveInput;
@@ -24,8 +28,16 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimer = 0f;
     private bool canUseBlink = true;
     private bool canUseRewind = true;
-    float blinkTimer = 0f;
-    float rewindTimer = 0f;
+    private bool canUseClone = true;
+    //private bool canDestroyClone = false;
+    private float blinkTimer = 0f;
+    private float rewindTimer = 0f;
+    private float cloneTimer = 0f;
+    private float cloneDestructionTimer = 0f;
+    private GameObject activeClone; // runtime instance
+
+    
+    
 
     private Queue<Vector3> positionHistory = new Queue<Vector3>();
     private Vector3 initialPosition;
@@ -61,6 +73,21 @@ public class PlayerMovement : MonoBehaviour
     void OnBlink(InputValue value)
     {
         isBlinkPressed = value.isPressed;
+    }
+
+    void OnClone(InputValue value)
+    {
+        if (value.isPressed && canUseClone)
+        {
+            activeClone = Instantiate(playerClone, transform.position, Quaternion.identity);
+
+            cloneTimer = cloneTimeCoolDown;
+            cloneDestructionTimer = cloneTimeDestructionCoolDown;
+            canUseClone = false;
+            //canDestroyClone = true;
+        }
+
+        
     }
 
     void Movement()
@@ -113,11 +140,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void FixedUpdate()
-    {
-        TrackPosition();
-    }
-
     private void TrackPosition()
     {
         recordTimer += Time.deltaTime;
@@ -139,9 +161,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (rewindTimer > 0) { rewindTimer -= Time.deltaTime; }
 
+        if (cloneTimer > 0) { cloneTimer -= Time.deltaTime; }
+
+        if(cloneDestructionTimer > 0) { cloneDestructionTimer -= Time.deltaTime; }
+
         if (blinkTimer <= 0)
         {
-            blinkTimer = Mathf.Max(0, blinkTimer);  
+            blinkTimer = Mathf.Max(0, blinkTimer);
             canUseBlink = true;
         }
 
@@ -150,8 +176,30 @@ public class PlayerMovement : MonoBehaviour
             rewindTimer = Mathf.Max(0, rewindTimer);
             canUseRewind = true;
         }
+
+        //timer to destroy the clone
+        if (cloneDestructionTimer <= 0)
+        {
+            cloneDestructionTimer = Mathf.Max(0, cloneDestructionTimer);
+
+            if (playerClone != null)
+            {
+                Destroy(activeClone);
+            }
+        }
+
+        if (cloneTimer <= 0)
+        {
+            cloneTimer = Mathf.Max(0, cloneTimer);
+            canUseClone = true;
+        }
     }
-    
+
+    void FixedUpdate()
+    {
+        TrackPosition();
+    }
+
     void Update()
     {
         Movement();
