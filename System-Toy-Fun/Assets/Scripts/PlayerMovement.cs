@@ -84,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
             cloneTimer = cloneTimeCoolDown;
             cloneDestructionTimer = cloneTimeDestructionCoolDown;
             canUseClone = false;
+
+
             //canDestroyClone = true;
         }
 
@@ -157,6 +159,11 @@ public class PlayerMovement : MonoBehaviour
 
     void TrackCoolDown()
     {
+        if (activeClone != null && Input.GetKeyDown(KeyCode.C))
+        {
+            Destroy(activeClone);
+        }
+
         if (blinkTimer > 0) { blinkTimer -= Time.deltaTime; }
 
         if (rewindTimer > 0) { rewindTimer -= Time.deltaTime; }
