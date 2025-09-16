@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canUseBlink = true;
     private bool canUseRewind = true;
     private bool canUseClone = true;
-    //private bool canDestroyClone = false;
+    
     private float blinkTimer = 0f;
     private float rewindTimer = 0f;
     private float cloneTimer = 0f;

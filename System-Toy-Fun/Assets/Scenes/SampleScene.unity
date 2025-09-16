@@ -631,8 +631,10 @@ MonoBehaviour:
 
     [LCtrl] Clone Player
 
-    [G]
-    Gravity Flip'
+    [C]
+    Destroy Clone
+
+    [G] Gravity Flip'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1406,10 +1408,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6911966646961469138, guid: 77b80a7bc295b534997d0add884b10c2, type: 3}
-      propertyPath: playerClone
-      value: 
-      objectReference: {fileID: 3251471067869078606, guid: dfe0da80cfcdd1a4da64791cb592f090, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

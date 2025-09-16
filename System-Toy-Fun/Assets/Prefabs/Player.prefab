@@ -118,9 +118,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2774712483359689832}
   - component: {fileID: 2696639618020219398}
-  - component: {fileID: 6911966646961469138}
   - component: {fileID: 1535129507630239650}
   - component: {fileID: 7223533680684504367}
+  - component: {fileID: 2299445593062395653}
+  - component: {fileID: -4382863792880965640}
+  - component: {fileID: -7065924950861830499}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -194,29 +196,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &6911966646961469138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3251471067869078606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 990bd7f03d4cad1449b4b8922e64d16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveAcceleration: 5
-  jumpForce: 3
-  recordLimit: 5
-  recordTimer: 0
-  recordInterval: 0.2
-  blinkBoost: 5
-  blinkCoolDown: 2
-  rewindCoolDown: 5
-  playerClone: {fileID: 3251471067869078606, guid: dfe0da80cfcdd1a4da64791cb592f090, type: 3}
-  cloneTimeCoolDown: 5
-  cloneTimeDestructionCoolDown: 2.5
 --- !u!54 &1535129507630239650
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -265,6 +244,54 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2299445593062395653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251471067869078606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea069248b37a8bf48b49133ea6566ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveAcceleration: 5
+  jumpForce: 2.5
+  move: {x: 0, y: 0, z: 0}
+--- !u!114 &-4382863792880965640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251471067869078606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de622d18e891e8948bd212989c9718dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewindCoolDown: 5
+  recordLimit: 5
+  recordTimer: 0
+  recordInterval: 0.2
+  blinkCoolDown: 3
+  blinkBoost: 2.5
+  cloneCoolDown: 10
+  cloneTimeDestructionCoolDown: 5
+  playerClone: {fileID: 3251471067869078606, guid: dfe0da80cfcdd1a4da64791cb592f090, type: 3}
+--- !u!114 &-7065924950861830499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251471067869078606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d91719911353d084da2a226124034e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3347172159733311851
 GameObject:
   m_ObjectHideFlags: 0
