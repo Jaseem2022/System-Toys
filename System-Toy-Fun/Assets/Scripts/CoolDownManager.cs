@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class CoolDownManager : MonoBehaviour
 {
-    private Dictionary<string, float> cooldownTimers = new Dictionary<string, float>();
-    private Dictionary<string, float> cooldownDurations = new Dictionary<string, float>();
+    private Dictionary<int, float> cooldownTimers = new Dictionary<int, float>();
+    private Dictionary<int, float> cooldownDurations = new Dictionary<int, float>();
 
-    public void RegisterAbility(string abilityName, float cooldownDuration)
+    public void RegisterAbility(int abilityNameIndex, float cooldownDuration)
     {
-        cooldownDurations[abilityName] = cooldownDuration;
-        cooldownTimers[abilityName] = 0f;
+        cooldownDurations[abilityNameIndex] = cooldownDuration;
+        cooldownTimers[abilityNameIndex] = 0f;
     }
 
-    public bool CanUse(string abilityName)
+    public bool CanUse(int abilityNameIndex)
     {
-        return cooldownTimers[abilityName] <= 0f;
+        return cooldownTimers[abilityNameIndex] <= 0f;
     }
 
-    public void TriggerCooldown(string abilityName)
+    public void TriggerCooldown(int abilityNameIndex)
     {
-        cooldownTimers[abilityName] = cooldownDurations[abilityName];
+        cooldownTimers[abilityNameIndex] = cooldownDurations[abilityNameIndex];
     }
 
     void Update()
     {
-        var keys = new List<string>(cooldownTimers.Keys);
+        var keys = new List<int>(cooldownTimers.Keys);
         foreach (var key in keys)
         {
             cooldownTimers[key] = Mathf.Max(0f, cooldownTimers[key] - Time.deltaTime);

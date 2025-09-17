@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Ability : MonoBehaviour
-{
+{   
+    enum PlayerAbilities{REWIND,BLINK,CLONE_SPAWN,CLONE_DESTROY};
    
     //rewind
     private Queue<Vector3> positionHistory = new Queue<Vector3>();
@@ -30,12 +31,14 @@ public class Ability : MonoBehaviour
 
     //rigidbody
     Rigidbody rb;
+
+    //class instance for cooldown
     private CoolDownManager coolDownManager;
 
     void OnRewind(InputValue value)
     {
         float speed = .95f;
-        if (value.isPressed && coolDownManager.CanUse("rewind"))
+        if (value.isPressed && coolDownManager.CanUse((int)PlayerAbilities.REWIND))
         {
             if (positionHistory.Count() > 0)
             {
@@ -43,7 +46,7 @@ public class Ability : MonoBehaviour
                 rb.MovePosition(Vector3.Lerp(transform.position, past, speed));
 
             }
-            coolDownManager.TriggerCooldown("rewind");
+            coolDownManager.TriggerCooldown((int)PlayerAbilities.REWIND);
         }
     }
 
@@ -68,23 +71,23 @@ public class Ability : MonoBehaviour
 
     void OnBlink(InputValue value)
     {
-        if (value.isPressed && coolDownManager.CanUse("blink"))
+        if (value.isPressed && coolDownManager.CanUse((int)PlayerAbilities.BLINK))
         {
             dashTimer = dashTime;
-            coolDownManager.TriggerCooldown("blink");
+            coolDownManager.TriggerCooldown((int)PlayerAbilities.BLINK);
         }
 
     }
 
      void OnClone(InputValue value)
     {
-        if (value.isPressed && coolDownManager.CanUse("clone_spawn"))
+        if (value.isPressed && coolDownManager.CanUse((int)PlayerAbilities.CLONE_SPAWN))
         {
             activeClone = Instantiate(playerClone, transform.position, Quaternion.identity);
 
-            coolDownManager.TriggerCooldown("clone_spawn");
+            coolDownManager.TriggerCooldown((int)PlayerAbilities.CLONE_SPAWN);
             
-            coolDownManager.TriggerCooldown("clone_destruction");
+            coolDownManager.TriggerCooldown((int)PlayerAbilities.CLONE_DESTROY);
 
         }
 
@@ -101,7 +104,7 @@ public class Ability : MonoBehaviour
         }
 
         // Auto destroy when cooldown is done
-        if (activeClone != null && coolDownManager.CanUse("clone_destruction"))
+        if (activeClone != null && coolDownManager.CanUse((int)PlayerAbilities.CLONE_DESTROY))
         {
             Destroy(activeClone);
             activeClone = null;
@@ -121,10 +124,10 @@ public class Ability : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerMotion = FindFirstObjectByType<PlayerMotion>();
         coolDownManager = FindFirstObjectByType<CoolDownManager>();
-        coolDownManager.RegisterAbility("rewind", rewindCoolDown);
-        coolDownManager.RegisterAbility("blink", blinkCoolDown);
-        coolDownManager.RegisterAbility("clone_spawn", cloneCoolDown);
-        coolDownManager.RegisterAbility("clone_destruction", cloneTimeDestructionCoolDown);
+        coolDownManager.RegisterAbility((int)PlayerAbilities.REWIND, rewindCoolDown);
+        coolDownManager.RegisterAbility((int)PlayerAbilities.BLINK, blinkCoolDown);
+        coolDownManager.RegisterAbility((int)PlayerAbilities.CLONE_SPAWN, cloneCoolDown);
+        coolDownManager.RegisterAbility((int)PlayerAbilities.CLONE_DESTROY, cloneTimeDestructionCoolDown);
     }
 
     void Update()
