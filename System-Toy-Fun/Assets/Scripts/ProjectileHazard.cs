@@ -8,27 +8,33 @@ public class ProjectileHazard : MonoBehaviour
     [SerializeField] GameObject playerPrefab;
     [SerializeField] float projectileSpeed = 5f;
 
-    //fix the logic tomorrow
-    IEnumerator SpawnProjectiles()
+    GameObject activeProjectile;
+    void TrackPlayer()
     {
-        while(true)
+        if ((activeProjectile.transform.position - playerPrefab.transform.position).sqrMagnitude <= 0.01f)
         {
-            if (projectilePrefab != null && playerPrefab != null)
-            {
-                
-                GameObject activeProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity);
-                Vector3 towardsPlayer = (playerPrefab.transform.position - transform.position).normalized;
-                activeProjectile.transform.Translate(towardsPlayer * projectileSpeed * Time.deltaTime);
-            }
-
-
-            yield return new WaitForSeconds(2f);
+            Destroy(activeProjectile);
+            activeProjectile = null;
+        }
+        else
+        {
+            Vector3 towardsPlayer = Vector3.MoveTowards(activeProjectile.transform.position,
+                                                            playerPrefab.transform.position,
+                                                            projectileSpeed * Time.deltaTime);
+            activeProjectile.transform.position = towardsPlayer;
         }
     }
 
-    // Update is called once per frame
     void Start()
     {
-        StartCoroutine(SpawnProjectiles());    
+        activeProjectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
     }
+
+    void Update()
+    {
+        TrackPlayer();
+
+    }
+
+
 }
