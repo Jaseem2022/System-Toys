@@ -1,11 +1,7 @@
-using NUnit.Framework;
 using UnityEngine;
-
-public class Trap : MonoBehaviour
+public class BearTrap : MonoBehaviour
 {
-
-    [SerializeField] Rigidbody rb;
-    [SerializeField] float trapTime = 4f;
+   [SerializeField] float trapTime = 4f;
 
     private Color activeColor = Color.red;
     private bool isPlayerTrapped = false;
@@ -13,23 +9,25 @@ public class Trap : MonoBehaviour
     private float trapHeight = 1f;
 
     private Renderer rend;
+    private Rigidbody playerRigidBody;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            rb.constraints = RigidbodyConstraints.FreezeAll;
+            playerRigidBody = other.GetComponent<Rigidbody>();
+            playerRigidBody.constraints = RigidbodyConstraints.FreezeAll;
             isPlayerTrapped = true;
 
             Vector3 trapCenter = transform.position;
-            
+
             Vector3 oldPlayerPosition = other.transform.position;
             Vector3 newPlayerPosition = new Vector3(trapCenter.x,
-                                                   trapCenter.y + (trapHeight/2f) ,
+                                                   trapCenter.y + (trapHeight / 2f),
                                                    trapCenter.z);
-            other.transform.position = Vector3.Lerp(oldPlayerPosition,newPlayerPosition,0.95f);
+            other.transform.position = Vector3.Lerp(oldPlayerPosition, newPlayerPosition, 0.95f);
 
-
+            Debug.Log("tagged with player");
             if (rend != null)
             {
                 rend.material.color = activeColor;
@@ -45,7 +43,7 @@ public class Trap : MonoBehaviour
             trapTimer += Time.deltaTime;
             if (trapTimer >= trapTime)
             {
-                rb.constraints = RigidbodyConstraints.None;
+                playerRigidBody.constraints = RigidbodyConstraints.None;
                 isPlayerTrapped = false;
                 Destroy(gameObject);
             }
@@ -62,5 +60,4 @@ public class Trap : MonoBehaviour
     {
         CheckPlayerTrapped();
     }
-
 }

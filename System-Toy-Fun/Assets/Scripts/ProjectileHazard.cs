@@ -11,12 +11,15 @@ public class ProjectileHazard : MonoBehaviour
     GameObject activeProjectile;
     void TrackPlayer()
     {
-        if ((activeProjectile.transform.position - playerPrefab.transform.position).sqrMagnitude <= 0.01f)
+        if (activeProjectile &&
+            (activeProjectile.transform.position - playerPrefab.transform.position)
+            .sqrMagnitude <= 0.01f
+            )
         {
             Destroy(activeProjectile);
             activeProjectile = null;
         }
-        else
+        else if(activeProjectile)
         {
             Vector3 towardsPlayer = Vector3.MoveTowards(activeProjectile.transform.position,
                                                             playerPrefab.transform.position,
