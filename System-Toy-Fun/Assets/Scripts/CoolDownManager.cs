@@ -7,6 +7,12 @@ public class CoolDownManager : MonoBehaviour
     private Dictionary<int, float> cooldownTimers = new Dictionary<int, float>();
     private Dictionary<int, float> cooldownDurations = new Dictionary<int, float>();
 
+
+    public Dictionary<int, float> getCoolDownDurations()
+    {
+        return cooldownDurations;
+    }
+
     public void RegisterAbility(int abilityNameIndex, float cooldownDuration)
     {
         cooldownDurations[abilityNameIndex] = cooldownDuration;
@@ -23,6 +29,11 @@ public class CoolDownManager : MonoBehaviour
         cooldownTimers[abilityNameIndex] = cooldownDurations[abilityNameIndex];
     }
 
+    public float RemainingTime(int abilityNameIndex)
+    {
+        return cooldownTimers[abilityNameIndex];
+    }
+    
     void Update()
     {
         var keys = new List<int>(cooldownTimers.Keys);

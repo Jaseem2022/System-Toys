@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Ability : MonoBehaviour
 {   
-    enum PlayerAbilities{REWIND,BLINK,CLONE_SPAWN,CLONE_DESTROY};
+    public enum PlayerAbilities{REWIND,BLINK,CLONE_SPAWN,CLONE_DESTROY};
    
     //rewind
     private Queue<Vector3> positionHistory = new Queue<Vector3>();
