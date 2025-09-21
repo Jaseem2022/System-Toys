@@ -15,28 +15,29 @@
 
 * **Rewind** → Travel back 5 seconds in time (Tracer-style)
 * **Blink** → Short dash with cooldown
+* **Clone Spawning** -> Spawns a clone of player prefab and destroys itself after a specific time
+* **Clone Destruction** -> Ability to destroy the clone manually before the timer runs out
 
 ### 🌍 Environment Systems
 
 * **Gravity Flip** → Invert gravity for all rigidbodies in the scene
-* **Trap (Junkrat-style)** → Immobilizes the player for 4s, then destroys itself
-
+* **Traps**
+   - Bear Trap : Arrests the movement of player
+   - Magnetic Trap : Attract player towards the trap and slows down the movement of player till escaping the radius.
+   - Explosive Trap : Triggers and explodes the trap while in range and stuns the player for 3 seconds.
+* **Collectibles**
+   - Diamond : A coin like collectible
+   - Shrink : Shrinks the player
+   - Expand : Expands the player if already shrunk
+             
 ### 🖥️ Scene Management & UI
 
 * Quit game (Escape key)
 * Reload current scene (R key)
 * Small instruction panel showing quit/reload keys
-
----
-
-## 📋 Planned Features
-
-* Collectibles → points, power-ups, shrink/grow effects
-* Clone ability → spawn a copy of the player
-* Magnetism trap → attract/repel player
-* Tracking projectiles → follow and hit player
-* Boink trap → knockback effect
-* Ability cooldown UI
+* Ability cooldown timers
+* Ability key mappings
+* Coin Pickup count
 
 ---
 
